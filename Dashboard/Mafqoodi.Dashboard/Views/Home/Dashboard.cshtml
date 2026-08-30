@@ -1,13 +1,27 @@
 @model DashboardStatisticsViewModel
-<h1>لوحة التحكم</h1>
-<div class="grid">
-    <section class="stat"><span>المستخدمون</span><strong>@Model.TotalUsers</strong></section>
-    <section class="stat"><span>كل البلاغات</span><strong>@Model.TotalReports</strong></section>
-    <section class="stat"><span>النشطة</span><strong>@Model.ActiveReports</strong></section>
-    <section class="stat"><span>المحلولة</span><strong>@Model.ResolvedReports</strong></section>
-</div>
-<div class="panel">
-    <h2>إدارة النظام</h2>
-    <p>الإحصائيات أعلاه تُقرأ من SQL Server عبر ASP.NET Core API.</p>
-    <a class="primary inline" asp-controller="Users" asp-action="Index">إدارة المستخدمين</a>
-</div>
+@{
+    ViewData["Title"] = "لوحة التحكم";
+}
+<section class="page-heading">
+    <div>
+        <span class="eyebrow">Mafqoodi Admin</span>
+        <h1>لوحة التحكم</h1>
+        <p>نظرة سريعة على حالة المنصة والبلاغات والمستخدمين.</p>
+    </div>
+</section>
+
+<section class="stats-grid" aria-label="إحصائيات النظام">
+    <article class="stat-card"><div class="stat-icon">👥</div><span>إجمالي المستخدمين</span><strong>@Model.TotalUsers</strong><small>المستخدمون المسجلون</small></article>
+    <article class="stat-card"><div class="stat-icon">📋</div><span>إجمالي البلاغات</span><strong>@Model.TotalReports</strong><small>كل البلاغات</small></article>
+    <article class="stat-card"><div class="stat-icon">🔎</div><span>البلاغات النشطة</span><strong>@Model.ActiveReports</strong><small>تحتاج متابعة</small></article>
+    <article class="stat-card"><div class="stat-icon">✓</div><span>البلاغات المحلولة</span><strong>@Model.ResolvedReports</strong><small>تمت معالجتها</small></article>
+</section>
+
+<section class="panel management-panel">
+    <div class="panel-heading"><div><span class="eyebrow">System Management</span><h2>إدارة النظام</h2></div><span class="status-pill">SQL Server · API</span></div>
+    <p>تعمل لوحة الإدارة عبر ASP.NET Core API وCQRS وEF Core، مع SQL Server كمصدر البيانات.</p>
+    <div class="action-grid">
+        <a class="action-card" asp-controller="Users" asp-action="Index"><strong>إدارة المستخدمين</strong><span>عرض المستخدمين وإدارة حالات الحسابات</span></a>
+        <a class="action-card" href="/swagger" target="_blank" rel="noopener"><strong>API Documentation</strong><span>فتح توثيق Swagger للـAPI</span></a>
+    </div>
+</section>
