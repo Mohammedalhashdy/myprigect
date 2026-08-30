@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Mafqoodi Dashboard</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+<header class="topbar"><a asp-controller="Home" asp-action="Dashboard" class="brand">مفقودي</a><form asp-controller="Account" asp-action="Logout" method="post"><button class="link-button">تسجيل الخروج</button></form></header>
+<div class="shell">
+    <aside class="sidebar">
+        <a asp-controller="Home" asp-action="Dashboard">لوحة التحكم</a>
+        <a asp-controller="Users" asp-action="Index">المستخدمون</a>
+    </aside>
+    <main class="content">@RenderBody()</main>
+</div>
+</body>
+</html>
