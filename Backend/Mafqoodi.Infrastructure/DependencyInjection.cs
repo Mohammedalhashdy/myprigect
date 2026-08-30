@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Mafqoodi.Application.Abstractions;
+using Mafqoodi.Application.Services;
 using Mafqoodi.Infrastructure.Persistence;
 using Mafqoodi.Infrastructure.Repositories;
 using Mafqoodi.Infrastructure.Security;
@@ -21,6 +22,7 @@ public static class DependencyInjection
         services.AddSingleton<IPasswordService, PasswordService>();
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<ISmartMatchingService, SmartMatchingService>();
+        services.AddSingleton<IOtpService, OtpService>(); // OTP مؤقت وآمن
         return services;
     }
 }
