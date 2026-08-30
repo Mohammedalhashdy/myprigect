@@ -1,0 +1,25 @@
+@model IReadOnlyList<Mafqoodi.Dashboard.Models.ReportViewModel>
+@{ ViewData["Title"] = "إدارة البلاغات"; }
+<section class="page-heading"><div><span class="eyebrow">Reports Management</span><h1>إدارة البلاغات</h1><p>مراجعة البلاغات وتحديث حالتها من لوحة الإدارة.</p></div></section>
+<section class="panel table-wrap">
+<table>
+<thead><tr><th>العنوان</th><th>النوع</th><th>التصنيف</th><th>الموقع</th><th>الحالة</th><th>المراجعة</th><th>الإجراء</th></tr></thead>
+<tbody>
+@foreach (var report in Model)
+{
+<tr>
+<td><strong>@report.Title</strong></td><td>@report.ReportType</td><td>@report.Category</td><td>@report.LocationName</td><td>@report.Status</td><td>@report.AdminStatus</td>
+<td>
+<form asp-action="UpdateStatus" method="post" class="status-form">
+@Html.AntiForgeryToken()<input type="hidden" name="id" value="@report.Id" />
+<select name="status"><option value="pending">قيد المراجعة</option><option value="approved">مقبول</option><option value="rejected">مرفوض</option><option value="resolved">محلول</option></select>
+<button class="primary" type="submit">حفظ</button>
+</form>
+</td>
+</tr>
+}
+</tbody>
+</table>
+@if (Model.Count == 0) { <p>لا توجد بلاغات حاليًا.</p> }
+</section>
+<style>.status-form{display:flex;gap:7px;align-items:center}.status-form select{padding:9px;border:1px solid #cbd5e1;border-radius:9px;font:inherit}@media(max-width:700px){.status-form{flex-direction:column;align-items:stretch}}</style>
