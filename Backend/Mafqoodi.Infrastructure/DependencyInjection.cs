@@ -20,6 +20,7 @@ public static class DependencyInjection
         services.AddScoped<IReportRepository, ReportRepository>();
         services.AddScoped<ISupportRepository, SupportRepository>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+        services.AddScoped<INotificationRepository, NotificationRepository>();
         services.AddSingleton<IPasswordService, PasswordService>();
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<ISmartMatchingService, SmartMatchingService>();
