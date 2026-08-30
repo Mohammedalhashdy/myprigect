@@ -1,0 +1,16 @@
+{
+  "info": {"name": "Mafqoodi API", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"},
+  "variable": [{"key":"baseUrl","value":"https://localhost:7001"},{"key":"token","value":""},{"key":"reportId","value":"00000000-0000-0000-0000-000000000000"}],
+  "item": [
+    {"name":"Auth","item":[
+      {"name":"Register","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\": \"Test User\",\n  \"email\": \"user@example.com\",\n  \"password\": \"ChangeMe123!\",\n  \"phoneNumber\": \"+967700000000\",\n  \"accountType\": \"personal\"\n}"},"url":"{{baseUrl}}/api/auth/register"}},
+      {"name":"Login","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"email\":\"user@example.com\",\"password\":\"ChangeMe123!\"}"},"url":"{{baseUrl}}/api/auth/login"}}
+    ]},
+    {"name":"Reports","item":[
+      {"name":"List","request":{"method":"GET","url":"{{baseUrl}}/api/reports"}},
+      {"name":"Mine","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":"{{baseUrl}}/api/reports/mine"}},
+      {"name":"Create","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"title\":\"محفظة\",\"description\":\"محفظة سوداء\",\"locationName\":\"صنعاء\",\"latitude\":15.35,\"longitude\":44.20,\"reportType\":\"lost\",\"category\":\"wallet\"}"},"url":"{{baseUrl}}/api/reports"}}
+    ]},
+    {"name":"Admin","item":[{"name":"Statistics","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":"{{baseUrl}}/api/admin/statistics"}},{"name":"Users","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":"{{baseUrl}}/api/admin/users"}}]}
+  ]
+}
