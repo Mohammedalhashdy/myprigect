@@ -1,0 +1,40 @@
+name: Mafqoodi Full Stack CI
+
+on:
+  push:
+    branches: [ main, latest-local-2026-08-30-rebuilt ]
+  pull_request:
+    branches: [ main, latest-local-2026-08-30-rebuilt ]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Restore API
+        run: dotnet restore Backend/Mafqoodi.API/Mafqoodi.API.csproj
+      - name: Build API
+        run: dotnet build Backend/Mafqoodi.API/Mafqoodi.API.csproj --no-restore --configuration Release
+      - name: Build Dashboard
+        run: dotnet build Dashboard/Mafqoodi.Dashboard/Mafqoodi.Dashboard.csproj --configuration Release
+
+  mobile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Flutter dependencies
+        working-directory: Mobile/Mafqoodi-Mobile
+        run: flutter pub get
+      - name: Flutter analyze
+        working-directory: Mobile/Mafqoodi-Mobile
+        run: flutter analyze
+      - name: Flutter tests
+        working-directory: Mobile/Mafqoodi-Mobile
+        run: flutter test
