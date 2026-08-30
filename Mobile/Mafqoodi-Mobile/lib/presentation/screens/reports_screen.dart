@@ -3,33 +3,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/report.dart';
 import '../providers/app_providers.dart';
 
-class ReportsScreen extends ConsumerStatefulWidget {
+class ReportsScreen extends ConsumerWidget {
   const ReportsScreen({super.key});
-  @override State<ReportsScreen> createState() => _ReportsScreenState();
-}
-
-class _ReportsScreenState extends ConsumerState<ReportsScreen> {
-  String? type;
-  String? category;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedType = ref.watch(reportTypeFilterProvider);
     final reports = ref.watch(reportsProvider);
     return Column(children: [
       Padding(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
         child: Row(children: [
           Expanded(child: DropdownButtonFormField<String>(
-            value: type,
+            value: selectedType,
             decoration: const InputDecoration(labelText: 'نوع البلاغ', prefixIcon: Icon(Icons.filter_alt_outlined)),
             items: const [
               DropdownMenuItem(value: 'lost', child: Text('مفقود')),
               DropdownMenuItem(value: 'found', child: Text('معثور عليه')),
             ],
-            onChanged: (v) => setState(() => type = v),
+            onChanged: (v) => ref.read(reportTypeFilterProvider.notifier).state = v,
           )),
           const SizedBox(width: 8),
-          IconButton(tooltip: 'مسح الفلاتر', onPressed: type == null && category == null ? null : () => setState(() { type = null; category = null; }), icon: const Icon(Icons.clear_all)),
+          IconButton(tooltip: 'مسح الفلاتر', onPressed: selectedType == null ? null : () => ref.read(reportTypeFilterProvider.notifier).state = null, icon: const Icon(Icons.clear_all)),
         ]),
       ),
       Expanded(child: RefreshIndicator(
@@ -37,16 +32,9 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
         child: reports.when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (e, _) => ListView(children: [Padding(padding: const EdgeInsets.all(24), child: Center(child: Text('تعذر تحميل البلاغات\n$e'), textAlign: TextAlign.center))]),
-          data: (items) {
-            final filtered = type == null ? items : items.where((r) => r.reportType == type).toList();
-            if (filtered.isEmpty) return ListView(children: const [Padding(padding: EdgeInsets.all(40), child: Center(child: Text('لا توجد بلاغات مطابقة')))]);
-            return ListView.separated(
-              padding: const EdgeInsets.all(16),
-              itemCount: filtered.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 10),
-              itemBuilder: (_, i) => _ReportCard(report: filtered[i]),
-            );
-          },
+          data: (items) => items.isEmpty
+              ? ListView(children: const [Padding(padding: EdgeInsets.all(40), child: Center(child: Text('لا توجد بلاغات مطابقة')))])
+              : ListView.separated(padding: const EdgeInsets.all(16), itemCount: items.length, separatorBuilder: (_, __) => const SizedBox(height: 10), itemBuilder: (_, i) => _ReportCard(report: items[i])),
         ),
       )),
     ]);
