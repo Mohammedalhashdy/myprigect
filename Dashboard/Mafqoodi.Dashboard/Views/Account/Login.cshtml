@@ -1,0 +1,14 @@
+@model LoginViewModel
+<div class="auth-card">
+    <h1>دخول الإدارة</h1>
+    <p>لوحة إدارة نظام مفقودي</p>
+    <form asp-action="Login" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="All" class="error"></div>
+        <label>البريد الإلكتروني</label>
+        <input asp-for="Email" type="email" autocomplete="username" required />
+        <label>كلمة المرور</label>
+        <input asp-for="Password" type="password" autocomplete="current-password" required />
+        <button class="primary" type="submit">تسجيل الدخول</button>
+    </form>
+</div>
