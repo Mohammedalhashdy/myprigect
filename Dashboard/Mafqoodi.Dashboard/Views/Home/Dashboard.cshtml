@@ -1,0 +1,13 @@
+@model DashboardStatisticsViewModel
+<h1>لوحة التحكم</h1>
+<div class="grid">
+    <section class="stat"><span>المستخدمون</span><strong>@Model.TotalUsers</strong></section>
+    <section class="stat"><span>كل البلاغات</span><strong>@Model.TotalReports</strong></section>
+    <section class="stat"><span>النشطة</span><strong>@Model.ActiveReports</strong></section>
+    <section class="stat"><span>المحلولة</span><strong>@Model.ResolvedReports</strong></section>
+</div>
+<div class="panel">
+    <h2>إدارة النظام</h2>
+    <p>الإحصائيات أعلاه تُقرأ من SQL Server عبر ASP.NET Core API.</p>
+    <a class="primary inline" asp-controller="Users" asp-action="Index">إدارة المستخدمين</a>
+</div>
