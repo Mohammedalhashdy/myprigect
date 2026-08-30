@@ -37,3 +37,6 @@
 
 ## Verification
 The repository structure and source contracts have been reviewed through GitHub. This environment cannot truthfully claim a local `dotnet build`, `dotnet test`, `flutter analyze`, or release build unless a corresponding CI workflow run succeeds.
+
+## Non-regression gate
+No original Mafqoodi user-facing feature or visual behavior may be intentionally removed. Any architectural change must preserve the feature or provide a demonstrably improved replacement.
