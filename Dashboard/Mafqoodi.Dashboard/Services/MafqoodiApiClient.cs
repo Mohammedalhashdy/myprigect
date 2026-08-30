@@ -9,7 +9,9 @@ public sealed class MafqoodiApiClient(HttpClient http, IHttpContextAccessor acce
     private void Authorize()
     {
         var token = accessor.HttpContext?.Session.GetString("admin_token");
-        http.DefaultRequestHeaders.Authorization = string.IsNullOrWhiteSpace(token) ? null : new AuthenticationHeaderValue("Bearer", token);
+        http.DefaultRequestHeaders.Authorization = string.IsNullOrWhiteSpace(token)
+            ? null
+            : new AuthenticationHeaderValue("Bearer", token);
     }
 
     public async Task<AuthViewModel?> LoginAsync(string email, string password)
@@ -31,10 +33,30 @@ public sealed class MafqoodiApiClient(HttpClient http, IHttpContextAccessor acce
         return await http.GetFromJsonAsync<List<UserViewModel>>("api/admin/users") ?? [];
     }
 
+    public async Task<List<ReportViewModel>> GetReportsAsync()
+    {
+        Authorize();
+        return await http.GetFromJsonAsync<List<ReportViewModel>>("api/reports") ?? [];
+    }
+
     public async Task<bool> SetBanAsync(Guid id, bool isBanned)
     {
         Authorize();
         var response = await http.PatchAsJsonAsync($"api/admin/users/{id}/status", new { isBanned });
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<bool> SetReportStatusAsync(Guid id, string status)
+    {
+        Authorize();
+        var response = await http.PatchAsJsonAsync($"api/admin/reports/{id}/status", new { status });
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<bool> BroadcastAsync(string title, string body)
+    {
+        Authorize();
+        var response = await http.PostAsJsonAsync("api/admin/notifications/broadcast", new { title, body });
         return response.IsSuccessStatusCode;
     }
 }
