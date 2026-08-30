@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mafqoodi.Application.CQRS.Admin;
+using Mafqoodi.Application.CQRS.Notifications;
 using Mafqoodi.Application.DTOs;
 
 namespace Mafqoodi.API.Controllers;
@@ -39,4 +40,10 @@ public sealed class AdminController(IMediator mediator) : ControllerBase
         await mediator.Send(new UpdateReportAdminStatusCommand(id, request.Status), ct);
         return NoContent();
     }
+
+    [HttpPost("notifications/broadcast")]
+    public async Task<ActionResult<object>> Broadcast(BroadcastRequest request, CancellationToken ct)
+        => Ok(new { recipients = await mediator.Send(new BroadcastNotificationCommand(request.Title, request.Body), ct) });
+
+    public sealed record BroadcastRequest(string Title, string Body);
 }
