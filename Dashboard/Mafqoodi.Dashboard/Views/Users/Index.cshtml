@@ -1,0 +1,17 @@
+@model IReadOnlyList<UserViewModel>
+<h1>إدارة المستخدمين</h1>
+<div class="panel table-wrap">
+<table>
+<thead><tr><th>الاسم</th><th>البريد</th><th>الهاتف</th><th>الدور</th><th>الحالة</th><th>إجراء</th></tr></thead>
+<tbody>
+@foreach (var user in Model)
+{
+<tr>
+<td>@user.Name</td><td>@user.Email</td><td>@user.PhoneNumber</td><td>@user.Role</td>
+<td>@(user.IsBanned ? "محظور" : "نشط")</td>
+<td><form asp-action="ToggleBan" method="post"><input type="hidden" name="id" value="@user.Id" /><input type="hidden" name="isBanned" value="@(!user.IsBanned)" /><button class="secondary" type="submit">@(user.IsBanned ? "رفع الحظر" : "حظر")</button></form></td>
+</tr>
+}
+</tbody>
+</table>
+</div>
