@@ -11,6 +11,14 @@ namespace Mafqoodi.API.Controllers;
 [Authorize]
 public sealed class SupportController(IMediator mediator) : ControllerBase
 {
+    [HttpGet("chats")]
+    public async Task<ActionResult<IReadOnlyList<SupportChatSummary>>> GetChats(CancellationToken ct)
+        => Ok(await mediator.Send(new GetMySupportChatsQuery(User.GetUserId()), ct));
+
+    [HttpGet("chats/{chatId:guid}/messages")]
+    public async Task<ActionResult<IReadOnlyList<SupportMessageDto>>> GetMessages(Guid chatId, CancellationToken ct)
+        => Ok(await mediator.Send(new GetSupportMessagesQuery(User.GetUserId(), chatId), ct));
+
     [HttpPost("chats/{chatId:guid}/messages")]
     public async Task<IActionResult> Send(Guid chatId, [FromBody] SendMessageRequest request, CancellationToken ct)
     {
