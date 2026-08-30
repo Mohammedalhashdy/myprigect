@@ -1,0 +1,23 @@
+# .NET
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo
+
+# Flutter
+Mobile/Mafqoodi-Mobile/.dart_tool/
+Mobile/Mafqoodi-Mobile/build/
+Mobile/Mafqoodi-Mobile/.flutter-plugins
+Mobile/Mafqoodi-Mobile/.flutter-plugins-dependencies
+Mobile/Mafqoodi-Mobile/.packages
+
+# Secrets
+.env
+**/appsettings.Development.json
+**/appsettings.Local.json
+*.pfx
+
+# IDE
+.idea/
+.vscode/
