@@ -14,8 +14,11 @@ final reportRepositoryProvider = Provider<IReportRepository>((ref) => ReportRepo
 
 final authSessionProvider = StateProvider<AuthSession?>((ref) => null);
 
+final reportTypeFilterProvider = StateProvider<String?>((ref) => null);
+
 final reportsProvider = FutureProvider.autoDispose<List<Report>>((ref) {
-  return GetReportsHandler(ref.read(reportRepositoryProvider)).execute(const GetReportsQuery(status: 'active'));
+  final type = ref.watch(reportTypeFilterProvider);
+  return GetReportsHandler(ref.read(reportRepositoryProvider)).execute(GetReportsQuery(status: 'active', reportType: type));
 });
 
 final myReportsProvider = FutureProvider.autoDispose<List<Report>>((ref) {
