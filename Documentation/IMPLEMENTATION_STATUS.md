@@ -17,21 +17,23 @@
 - Support chat read/send API with ownership enforcement.
 - Notification read API and admin broadcast command/API.
 - Server-side OTP generation/verification with short expiry and one-time use.
-- Smart matching service boundary and API.
+- Smart matching service boundary and deterministic text/geographic matching.
+- Server-side Gemini HTTP provider implementation and configuration boundary; client secrets are not used.
 - Swagger/OpenAPI and Postman collection.
 - MVC dashboard shell with API-backed statistics and user management.
 - Flutter migration shell using Riverpod, centralized API client, secure token storage and CQRS auth/report flows.
-- CI workflow for backend, dashboard and Flutter checks.
+- Flutter API client timeout/error hardening and configurable API base URL.
+- CI workflow validates the backend solution, dashboard, Flutter analyze/tests and Android debug build.
 - Short Arabic comments on important non-obvious logic.
 
 ## Remaining for production parity
-- Complete transplantation of every original Flutter screen, widget, localization file and binary asset while preserving behavior and visual design.
+- Wire the Gemini provider into SmartMatchingService and verify scoring end-to-end.
 - Replace development OTP delivery with a real SMS provider through an infrastructure adapter.
-- Complete server-side Gemini integration through a provider abstraction; no client-side secret.
 - Complete FCM/push notification adapter and event-driven notification triggers.
 - Complete organizations create/update/details behavior if required by the original feature set.
-- Complete admin support inbox, chat moderation, global notifications, logs and settings UI parity.
+- Complete transplantation of every original Flutter screen, widget, localization file and binary asset while preserving behavior and visual design.
 - End-to-end Flutter-to-API replacement of all legacy MongoDB/Firebase calls.
+- Complete admin support inbox, chat moderation, global notifications, logs and settings UI parity.
 - Integration tests against SQL Server/Testcontainers or an approved CI database.
 - Release APK/Windows builds and runtime verification.
 
