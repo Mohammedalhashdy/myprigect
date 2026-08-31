@@ -25,6 +25,8 @@ public static class DependencyInjection
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<ISmartMatchingService, SmartMatchingService>();
         services.AddSingleton<IOtpService, OtpService>(); // OTP مؤقت وآمن
+        services.AddSingleton<IGeminiMatchingProvider, DisabledGeminiMatchingProvider>(); // مزود آمن حتى ضبط Gemini
+        services.AddScoped<INotificationService, NoopNotificationService>(); // Push يُربط بمزود خارجي
         return services;
     }
 }
